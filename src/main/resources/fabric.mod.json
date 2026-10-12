@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "colossal_turtle",
+  "version": "${version}",
+  "name": "Colossal Turtle",
+  "description": "An old turtle thousands of blocks across, walking the world. From far off he looks like a mountain range. Climb on and live on his back.",
+  "authors": [
+    "JJ"
+  ],
+  "license": "All rights reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.jj.colossalturtle.ColossalTurtle"
+    ],
+    "client": [
+      "net.jj.colossalturtle.client.TurtleClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "mixins": [
+    "colossal_turtle.mixins.json",
+    {
+      "config": "colossal_turtle.client.mixins.json",
+      "environment": "client"
+    }
+  ]
+}

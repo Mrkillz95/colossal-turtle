@@ -1,0 +1,19 @@
+{
+  "type": "colossal_turtle:shell",
+  "generator": {
+    "type": "colossal_turtle:turtle_body",
+    "biome_source": {
+      "type": "colossal_turtle:turtle_body",
+      "highlands": "colossal_turtle:shell_highlands",
+      "moss_valleys": "colossal_turtle:moss_valleys",
+      "rim_forest": "colossal_turtle:rim_forest",
+      "underhang": "colossal_turtle:underhang",
+      "leg_cliffs": "colossal_turtle:leg_cliffs",
+      "neck_bridge": "colossal_turtle:neck_bridge",
+      "head_lands": "colossal_turtle:head_lands",
+      "tail_marsh": "colossal_turtle:tail_marsh",
+      "inside": "colossal_turtle:inside",
+      "stomach": "colossal_turtle:stomach"
+    }
+  }
+}

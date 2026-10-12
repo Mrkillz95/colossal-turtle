@@ -1,0 +1,66 @@
+plugins {
+    id 'fabric-loom' version '1.11.8'
+}
+version = project.mod_version
+group = project.maven_group
+base { archivesName = project.archives_base_name }
+repositories {
+    maven { name = 'CentralMirror'; url = 'https://maven-central.storage-download.googleapis.com/maven2/' }
+}
+loom {
+    splitEnvironmentSourceSets()
+}
+// the autotest lives in its own source set, so it never goes in the jar
+sourceSets {
+    autotest {
+        compileClasspath += client.compileClasspath + client.output + main.output
+        runtimeClasspath += client.runtimeClasspath + client.output + main.output
+    }
+}
+loom {
+    mods {
+        "colossal_turtle" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+        "colossal_turtle-autotest" {
+            sourceSet sourceSets.autotest
+        }
+    }
+    runs {
+        // ./gradlew runAutotest (-Pscript=tools/other.txt): makes a world, runs the script, takes screenshots, quits
+        autotest {
+            client()
+            name "Auto Test"
+            source sourceSets.autotest
+            def script = project.findProperty("script") ?: "tools/autotest.txt"
+            vmArg "-Dcolossal_turtle.autotest=${project.projectDir}/" + script
+            vmArg "-Xmx6G"
+            programArgs "--width", "1280", "--height", "720"
+            runDir "build/autotest"
+        }
+    }
+}
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+processResources {
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") { expand "version": project.version }
+}
+tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+jar { from("LICENSE") { rename { "${it}_${project.base.archivesName.get()}" } } }
+
+// Maven Central rate-limits the cloud machine, so use Google's mirror of it instead.
+afterEvaluate {
+    repositories.removeIf {
+        it instanceof MavenArtifactRepository && it.url.toString().contains("repo.maven.apache.org")
+    }
+}

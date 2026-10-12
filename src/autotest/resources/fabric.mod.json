@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "colossal_turtle-autotest",
+  "version": "1",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["net.jj.colossalturtle.autotest.AutoTest"]
+  }
+}

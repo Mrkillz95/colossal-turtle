@@ -1,0 +1,17 @@
+cmd time set 1000
+cmd turtle bring
+wait 1300
+look 180 0
+cmd turtle bring
+wait 40
+goprint
+wait 400
+status
+shot footprint
+look 180 0
+wait 5
+shot north
+look -90 0
+wait 5
+shot east
+quit
